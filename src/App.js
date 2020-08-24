@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import { getHero, amountOfHeroesInBase } from './Requests'
+import BoxHero from './BoxHero/BoxHero';
 
 function App() {
+  const [ heroRight,  setHeroRight ]  = useState({});
+  const [ heroCenter, setHeroCenter ] = useState({});
+  const [ heroLeft,   setHeroLeft ]   = useState({});
+
+  const getRandomHeroId = () => Math.floor(Math.random() * (amountOfHeroesInBase - 1)) + 1;
+
+  useEffect(() => {
+    getHero(getRandomHeroId()).then( resp => setHeroRight(resp.data));
+    getHero(getRandomHeroId()).then( resp => setHeroCenter(resp.data));
+    getHero(getRandomHeroId()).then( resp => setHeroLeft(resp.data));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BoxHero heroRight={heroRight} heroCenter={heroCenter} heroLeft={heroLeft} />
+    </>
   );
 }
 
