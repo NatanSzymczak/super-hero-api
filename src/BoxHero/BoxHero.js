@@ -1,12 +1,18 @@
 import React from 'react';
+import './BoxHero.css'
 
-function BoxHero ({ heroRight, heroCenter, heroLeft }) {
+function BoxHero ({ hero }) {
   return (
-    <>
-      <div>{heroRight.name}</div>
-      <div>{heroCenter.name}</div>
-      <div>{heroLeft.name}</div>
-    </>
+    <div className="box">
+      <img src={hero.image.url} alt='Superhero look' />
+      <div>
+        <h1>{hero.name}</h1>
+        <h2>Full name: {hero.biography["full-name"]}</h2>
+        <h2>Alignment: {hero.biography.alignment}</h2>
+        <h2>Group affiliation: {hero.connections["group-affiliation"]}</h2>
+        <h2>Publisher: {hero.biography.publisher}</h2>
+      </div>
+    </div>
   );
 }
 
