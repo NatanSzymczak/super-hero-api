@@ -1,30 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import { getHero, amountOfHeroesInBase } from './Requests'
-import Input from './Input/Input';
-import BoxHero from './BoxHero/BoxHero';
+// import Input from './Input/Input';
+import HeroCard from './HeroCard/HeroCard';
+import Navigation from './Navigation/Navigation';
 
 function App() {
   const [ heroes, setHero ] = useState([]);
-  const [ amount, updateAmount ] = useState(0);
-
   const getRandomHeroId = () => Math.floor(Math.random() * (amountOfHeroesInBase - 1)) + 1;
 
+  // const heroList = [70, 644, 620];
+  const heroList = [];
+
+  for (let i=0; i<3; i++) {
+    heroList.push(getRandomHeroId());
+  }
+
   useEffect(() => {
-    setHero([]);
-    for(let i=0; i<amount; i++){
-      getHero(getRandomHeroId()).then( resp =>
-        setHero(prevState => [...prevState, resp.data] ));
-    }
-  }, [amount]);
+    heroList.map( curr => getHero(curr)
+      .then(resp => setHero(prevState => [...prevState, resp.data] ))
+    )
+  }, []);
 
   return (
-    <div className="container">
-      <Input updateAmount={updateAmount} />
-      {console.log(heroes)}
-      {heroes.map(hero =>  <BoxHero key={hero.id} hero={hero} />  )}
-    </div>
+    <>
+      <Navigation />
+      <div className="container">
+        {console.log(heroes)}
+        {heroes.map(hero =>  <HeroCard key={hero.id} hero={hero} />  )}
+      </div>
+    </>
   );
 }
 
 export default App;
+
+
