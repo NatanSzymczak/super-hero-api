@@ -1,15 +1,27 @@
-import React from 'react';
-import './Navigation.css'
+import React, { useState } from 'react';
+import './Navigation.css';
+import { Link } from 'react-router-dom';
 
 function Navigation () {
+  const [ searchInputValue, setSearchInputValue ] = useState('');
+
   return (
     <nav>
       <div className="container nav">
-        <a href="http://localhost:3000/">Superhero Database</a>
-        <div className="input-group mb-4 mr-3 inputSearch">
-          <input type="text" className="form-control" placeholder="Enter the name of your hero" />
+        <a className="logo" href="http://localhost:3000/">Superhero Database</a>
+        <div className="input-group mr-4 inputSearch">
+          <input
+            name="search"
+            type="text"
+            className="form-control"
+            placeholder="Find your superhero!"
+            onChange={event => setSearchInputValue(event.target.value)}
+            value={searchInputValue}
+          />
           <div className="input-group-append">
-            <button className="btn btn-light " type="button">Search</button>
+            <Link to={`/search/${searchInputValue}`}>
+              <button className="btn btn-light" type="button">Search</button>
+            </Link>
           </div>
         </div>
       </div>

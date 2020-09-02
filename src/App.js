@@ -1,27 +1,30 @@
-import React from 'react';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navigation from './Navigation/Navigation';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import HeroRandom from './HeroRandom/HeroRandom';
+import HeroDetails from './HeroDetails/HeroDetails';
+import HeroSearch from './HeroSearch/HeroSearch';
+import NotFound from './NotFound/NotFound'
+import './App.css';
 
 function App() {
+  const [ heroes, setHero ] = useState([]);
   return (
-
     <Router>
       <Navigation />
-      <Switch>
-        <Route exact path="/">
-          <HeroRandom />
-        </Route>
-        <Route path="/search/:name">
-          <SearchHero />
-        </Route>
-        <Route path="/hero/:id">
-          <ShowHero />
-        </Route>
-      </Switch>
+      <main>
+        <Switch>
+          <Route exact path="/">
+            <HeroRandom heroes={heroes} setHero={setHero}/>
+          </Route>
+          <Route path="/search/:name">
+            <HeroSearch />
+          </Route>
+          <Route path="/hero/:id" component={HeroDetails} />
+          <Route component={NotFound} />
+        </Switch>
+      </main>
     </Router>
-
   );
 }
 

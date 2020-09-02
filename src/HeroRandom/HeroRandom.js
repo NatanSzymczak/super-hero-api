@@ -1,32 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import HeroCard from '../HeroCard/HeroCard'
+import React, { useEffect, useState } from 'react';
+import HeroBasicCard from '../HeroBasicCard/HeroBasicCard'
 import { getHero, amountOfHeroesInBase } from '../Requests'
+import Loader from '../Loader/Loader';
+import './HeroRandom.css';
 
-function HeroRandom() {
+const RANDOM_HEROES = 3;
 
-  const [ heroes, setHero ] = useState([]);
+function HeroRandom( { heroes, setHero } ) {
   const getRandomHeroId = () => Math.floor(Math.random() * (amountOfHeroesInBase - 1)) + 1;
-
-  // const heroList = [70, 644, 620];
+  const [ isLoading, setLoadingState ] = useState(true);
   const heroList = [];
-  const RANDOM_HEROES = 6;
 
   for (let i=0; i<RANDOM_HEROES; i++) {
     heroList.push(getRandomHeroId());
   }
 
   useEffect(() => {
+    setLoadingState(true);
     heroList.map( curr => getHero(curr)
       .then(resp => setHero(prevState => [...prevState, resp.data] ))
     )
+    setLoadingState(false);
   }, []);
 
 
   return (
-    <div className="container">
-      {console.log(heroes)}
-      {heroes.map(hero =>  <HeroCard key={hero.id} hero={hero} />  )}
-    </div>
+    <>
+      { !isLoading &&
+        (<div className="container randomHeroes">
+          {console.log(heroes)}
+          {heroes.map(hero =>  <HeroBasicCard key={hero.id} hero={hero} /> )}
+        </div>)
+        }
+      { isLoading && <Loader /> }
+    </>
   );
 }
 

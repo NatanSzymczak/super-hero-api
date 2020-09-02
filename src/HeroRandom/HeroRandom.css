@@ -1,0 +1,13 @@
+@media (max-width: 580px) {
+  body {
+    width: 100%;
+  }
+
+  .randomHeroes{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+
+  }
+}
+

@@ -1,4 +1,4 @@
-a {
+.logo {
   margin-left: 50px;
   text-decoration: none;
   color: white;
@@ -7,25 +7,24 @@ a {
   transition: .4s;
 }
 
-a:hover {
+.logo:hover {
   text-decoration: none;
   color: white;
-  transform: scale(1.07);
+  transform: scale(1.4) translate(32px);
 }
 
 .nav {
-  height: 75px;
+  height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  align-content: center;
   background-color: black;
   margin-bottom: 30px;
 }
 
 .inputSearch {
-  justify-content: left !important;
-  width: 350px;
-  height: 30px;
-  margin: auto;
+  align-content: center;
+  width: 250px;
   font-size: 20px;
 }

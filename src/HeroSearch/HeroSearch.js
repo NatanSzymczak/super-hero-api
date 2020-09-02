@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import './HeroSearch.css';
-import { searchHeroesByName } from '../Requests';
 import HeroBasicCard from '../HeroBasicCard/HeroBasicCard';
-import { useParams } from 'react-router';
+import NotFound from '../NotFound/NotFound'
 import Loader from '../Loader/Loader';
+import { searchHeroesByName } from '../Requests';
+import { Route } from "react-router-dom";
+import { useParams } from 'react-router';
+import './HeroSearch.css';
 
 function HeroSearch() {
   const [ searchList, setSearchListContent ] = useState([]);
@@ -14,17 +16,20 @@ function HeroSearch() {
     setLoadingState(true);
     searchHeroesByName(name)
       .then(searchResults => {
-        console.log(searchResults.data.results)
+
         setSearchListContent(searchResults.data.results);
         setLoadingState(false);
-      }).catch( err => console.log(err))
+      }).catch( err => {
+        console.log('Error: ', err)
+
+      })
   }, [name]);
 
   return (
     <>
       { !isLoading &&
         (<div className="container">
-          {searchList.map(curr => <HeroBasicCard key={curr.id} hero={curr} />)}
+          { searchList ? searchList.map(curr => <HeroBasicCard key={curr.id} hero={curr} />) : <Route path="/search/:id" component={NotFound} /> }
         </div>)
       }
       { isLoading && <Loader /> }

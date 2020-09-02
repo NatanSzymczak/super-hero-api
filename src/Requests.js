@@ -9,5 +9,5 @@ export const getHero = id => {
 }
 
 export const searchHeroesByName = name => {
-  return axios.get(`https://superheroapi.com/api/${ACCESS_TOKEN}/search/${name}`)
+  return axios.get(`https://superheroapi.com/api.php/${ACCESS_TOKEN}/search/${name}`)
 }
